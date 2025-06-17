@@ -4,7 +4,8 @@ import { hash } from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
 const postHandler = async (req: NextRequest) => {
-  const parsedData = SignupSchema.safeParse(req.json());
+  const body = await req.json();
+  const parsedData = SignupSchema.safeParse(body);
 
   if (!parsedData.success) {
     return NextResponse.json(

@@ -8,6 +8,7 @@ import { AuthOptions, Session, User } from "next-auth";
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
+      id: "credentials",
       name: "Credentials",
       credentials: {
         email: {
@@ -30,6 +31,12 @@ export const authOptions: AuthOptions = {
           const user = await prisma.user.findUnique({
             where: {
               email,
+            },
+            select: {
+              id: true,
+              email: true,
+              username: true,
+              password: true,
             },
           });
 
