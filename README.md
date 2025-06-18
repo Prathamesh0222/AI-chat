@@ -7,7 +7,7 @@ A production-ready AI chatbot web application built with **Next.js**, **TypeScri
 ## Architecture Diagram
 
 ![Architecture](./public/samples/architecture.png)
-
+        
 ##  Live Demo
 [https://ai.pimpalkar.com](#)  
 **Demo Credentials**  
