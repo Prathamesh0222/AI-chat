@@ -91,7 +91,7 @@ export default function ChatRoom() {
       <div className="pt-20">
         <div className="relative flex flex-col items-center justify-end min-h-screen p-4">
           <div className="relative z-10 flex flex-col items-center w-full">
-            <div className="flex flex-col space-y-4 w-full max-w-3xl mx-auto">
+            <div className="flex flex-col space-y-4 w-full max-w-3xl mx-auto pb-32">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -169,42 +169,43 @@ export default function ChatRoom() {
               ))}
               <div ref={messagesEndRef} />
             </div>
-            <form onSubmit={sendMessage} className="w-full max-w-3xl mx-auto">
-              <div className="relative rounded-2xl shadow-lg items-center">
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask anything"
-                  className="w-full p-8 pr-18 rounded-2xl focus:ring-blue-500 resize-none ring-2 ring-blue-500/20"
-                  disabled={loading}
-                />
-
-                <div className="absolute bottom-3.5 right-3 flex items-center justify-between">
-                  <Button
-                    type="submit"
-                    className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            <div className="fixed bottom-0 left-0 right-0 backdrop-blur-md p-4">
+              <form onSubmit={sendMessage} className="w-full max-w-3xl mx-auto">
+                <div className="relative rounded-2xl shadow-lg items-center">
+                  <Input
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Ask anything"
+                    className="w-full p-6 pr-18 rounded-2xl focus:ring-blue-500 resize-none ring-2 ring-blue-500/20"
                     disabled={loading}
-                  >
-                    {loading ? (
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="w-5 h-5 rotate-90 transform"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path d="M12 19V5M5 12l7-7 7 7" />
-                      </svg>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </form>
+                  />
 
-            <div className="mt-4 text-center text-sm text-gray-500">
-              <p>AI can make mistakes. Please double-check responses.</p>
+                  <div className="absolute bottom-2 right-3 flex items-center justify-between">
+                    <Button
+                      type="submit"
+                      className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="w-5 h-5 rotate-90 transform"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M12 19V5M5 12l7-7 7 7" />
+                        </svg>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+              <div className="mt-4 text-center text-sm text-gray-500">
+                <p>AI can make mistakes. Please double-check responses.</p>
+              </div>
             </div>
           </div>
         </div>

@@ -12,14 +12,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut } from "lucide-react";
+import { LogOut, SquarePen } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const ChatNavbar = () => {
+  const router = useRouter();
   const handleSignOut = async () => {
     await signOut({
       callbackUrl: "/signin",
       redirect: true,
     });
+  };
+
+  const startNewChat = () => {
+    router.push("/chat");
   };
 
   const session = useSession();
@@ -43,30 +49,38 @@ export const ChatNavbar = () => {
             </div>
           </div>
         </div>
+        <div className="flex gap-5 items-center">
+          <SquarePen
+            onClick={startNewChat}
+            className="w-4.5 h-4.5 text-muted-foreground cursor-pointer hover:text-white"
+          />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Avatar className="cursor-pointer hover:opacity-80">
+                <AvatarFallback className="bg-gradient-to-r from-purple-500 to-blue-500 font-semibold">
+                  {session.data?.user.username?.charAt(0).toUpperCase() ||
+                    session.data?.user.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                {session.data?.user.username || session.data?.user.name}
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Coming Soon...</DropdownMenuItem>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar className="cursor-pointer hover:opacity-80">
-              <AvatarFallback className="bg-gradient-to-r from-purple-500 to-blue-500 font-semibold">
-                {session.data?.user.username?.charAt(0).toUpperCase() ||
-                  session.data?.user.name?.charAt(0).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>
-              {session.data?.user.username || session.data?.user.name}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Coming Soon...</DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600" onClick={handleSignOut}>
-              <LogOut className="mr-2 h-4 w-4" />
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-red-600"
+                onClick={handleSignOut}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </nav>
     </header>
   );
