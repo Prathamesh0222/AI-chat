@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export const HeroSection = () => {
   return (
@@ -47,7 +48,7 @@ export const HeroSection = () => {
           </div>
         </div>
 
-        <h1 className="text-5xl font-bold text-white mb-3 leading-tight">
+        <h1 className="text-5xl font-semibold text-white mb-3 leading-tight">
           Revolutionary AI
           <br />
           <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
@@ -59,12 +60,13 @@ export const HeroSection = () => {
           Experience the future of conversation. Build smarter workflows, get
           instant answers, and unlock your team's potential.
         </p>
-
-        <Button className="bg-blue-500/70 hover:bg-blue-500 cursor-pointer items-center font-semibold">
-          <MessageCircle />
-          <span>Start for free</span>
-          <ArrowRight className="w-5 h-5" />
-        </Button>
+        <Link href={"/signup"}>
+          <Button className="bg-blue-500/70 hover:bg-blue-500 cursor-pointer items-center font-semibold text-white">
+            <MessageCircle />
+            <span>Start for free</span>
+            <ArrowRight className="w-5 h-5" />
+          </Button>
+        </Link>
 
         <p className="text-gray-400 text-xs mt-5">
           No credit card required • Start chatting instantly

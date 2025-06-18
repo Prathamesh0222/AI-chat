@@ -16,8 +16,8 @@ export const Header = () => {
         <div className="flex items-center gap-2">
           <Link href="/signin">
             <Button
-              variant="ghost"
-              className="text-gray-300 hover:text-black cursor-pointer duration-300 transition-colors"
+              variant="outline"
+              className="text-gray-300 hover:text-white cursor-pointer duration-300 transition-colors"
             >
               Sign in
             </Button>
