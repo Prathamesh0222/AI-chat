@@ -58,7 +58,7 @@ export const HeroSection = () => {
 
         <p className="text-lg text-gray-300 mb-5 max-w-3xl mx-auto leading-relaxed md:px-12">
           Experience the future of conversation. Build smarter workflows, get
-          instant answers, and unlock your team's potential.
+          instant answers, and unlock your team&apos;s potential.
         </p>
         <Link href={"/signup"}>
           <Button className="bg-blue-500/70 hover:bg-blue-500 cursor-pointer items-center font-semibold text-white">

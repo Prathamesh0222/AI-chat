@@ -94,6 +94,7 @@ export const AuthPage = ({ isSignIn }: { isSignIn: boolean }) => {
         callbackUrl: "/chat",
       });
     } catch (error) {
+      console.error(`Failed to sign in with ${provider}`, error);
       toast.error(`Failed to sign in with ${provider}`, toastStyle);
     }
   };
@@ -211,7 +212,7 @@ export const AuthPage = ({ isSignIn }: { isSignIn: boolean }) => {
             <CardFooter className="flex justify-center text-sm">
               {isSignIn ? (
                 <p>
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <Link
                     href="/signup"
                     className="text-blue-400 hover:text-blue-300 transition-colors"
