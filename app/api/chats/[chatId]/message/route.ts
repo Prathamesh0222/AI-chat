@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (
   req: NextRequest,
-  { params }: { params: { chatId: string } }
+  { params }: { params: Promise<{ chatId: string }> }
 ) => {
   try {
     const session = await getServerSession(authOptions);
@@ -14,7 +14,7 @@ export const POST = async (
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = session.user.id;
-    const chatId = params.chatId;
+    const { chatId } = await params;
     if (!chatId) {
       return NextResponse.json(
         { error: "Chat ID is required" },
