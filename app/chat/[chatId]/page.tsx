@@ -80,7 +80,7 @@ export default function ChatRoom() {
   }
 
   if (session.status === "unauthenticated") {
-    router.push("/auth/signin");
+    router.push("/signin");
     return null;
   }
 

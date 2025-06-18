@@ -1,11 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ChatSidebar } from "./chatSidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { LogOut } from "lucide-react";
 
 export const ChatNavbar = () => {
+  const handleSignOut = async () => {
+    await signOut({
+      callbackUrl: "/signin",
+      redirect: true,
+    });
+  };
+
   const session = useSession();
   return (
     <header className="fixed top-0 left-0 right-0 px-6 py-4 z-50 backdrop-blur-md">
@@ -28,11 +44,29 @@ export const ChatNavbar = () => {
           </div>
         </div>
 
-        <Avatar>
-          <AvatarFallback className="bg-gradient-to-r from-purple-500 to-blue-500 font-semibold">
-            {session.data?.user.username?.charAt(0).toUpperCase() || "?"}
-          </AvatarFallback>
-        </Avatar>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar className="cursor-pointer hover:opacity-80">
+              <AvatarFallback className="bg-gradient-to-r from-purple-500 to-blue-500 font-semibold">
+                {session.data?.user.username?.charAt(0).toUpperCase() ||
+                  session.data?.user.name?.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>
+              {session.data?.user.username || session.data?.user.name}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Coming Soon...</DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="text-red-600" onClick={handleSignOut}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </nav>
     </header>
   );

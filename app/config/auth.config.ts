@@ -3,10 +3,20 @@ import { SigninSchema } from "../validators/auth.validate";
 import { prisma } from "../singleton/prisma";
 import { compare } from "bcryptjs";
 import { JWT } from "next-auth/jwt";
-import { AuthOptions, Session, User } from "next-auth";
+import { AuthOptions, Profile, Session, User } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 
 export const authOptions: AuthOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+    }),
     CredentialsProvider({
       id: "credentials",
       name: "Credentials",
@@ -61,7 +71,45 @@ export const authOptions: AuthOptions = {
       },
     }),
   ],
+
   callbacks: {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: User;
+      account: { provider: string } | null;
+      profile?: Profile;
+    }): Promise<boolean> {
+      if (account?.provider === "google" || account?.provider === "github") {
+        const email = user.email || profile?.email;
+
+        if (!email) {
+          return false;
+        }
+        try {
+          const dbUser = await prisma.user.upsert({
+            where: {
+              email,
+            },
+            update: {},
+            create: {
+              email,
+              username: user.name || profile?.name || "",
+              password: "",
+            },
+          });
+
+          user.id = dbUser.id;
+          return true;
+        } catch (error) {
+          console.error("Error while creating user", error);
+          return false;
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }: { token: JWT; user: User }) {
       if (user) {
         token.id = user.id;

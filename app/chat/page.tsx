@@ -7,11 +7,26 @@ import { BackgroundPattern } from "@/components/backgroundPattern";
 import { ChatNavbar } from "@/components/chatNavbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 
 export default function Chat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const session = useSession();
+
+  if (session.status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
+  }
+
+  if (session.status === "unauthenticated") {
+    router.push("/signin");
+    return null;
+  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
