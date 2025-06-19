@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Bot, UserCircle } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { Loader } from "@/components/Loader";
 
 interface Message {
   id: string;
@@ -72,11 +73,7 @@ export default function ChatRoom() {
   };
 
   if (session.status === "loading") {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
-      </div>
-    );
+    return <Loader />;
   }
 
   if (session.status === "unauthenticated") {

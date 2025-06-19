@@ -8,6 +8,7 @@ import { ChatNavbar } from "@/components/chatNavbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { Loader } from "@/components/Loader";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -16,11 +17,7 @@ export default function Chat() {
   const session = useSession();
 
   if (session.status === "loading") {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
-      </div>
-    );
+    return <Loader />;
   }
 
   if (session.status === "unauthenticated") {

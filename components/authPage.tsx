@@ -3,6 +3,7 @@
 import { BackgroundPattern } from "./backgroundPattern";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -21,6 +22,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { Loader } from "./Loader";
 
 export const AuthPage = ({ isSignIn }: { isSignIn: boolean }) => {
   const router = useRouter();
@@ -39,11 +41,7 @@ export const AuthPage = ({ isSignIn }: { isSignIn: boolean }) => {
   }, [status, router]);
 
   if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
+    return <Loader />;
   }
 
   if (status === "unauthenticated") {
@@ -120,7 +118,18 @@ export const AuthPage = ({ isSignIn }: { isSignIn: boolean }) => {
       <div>
         <BackgroundPattern />
         <div className="flex flex-col justify-center h-screen relative">
-          <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              type: "spring",
+              duration: 0.5,
+              ease: "easeIn",
+              stiffness: 100,
+              damping: 10,
+            }}
+            className="flex justify-center"
+          >
             <Card className="w-[500px] bg-blue-900/20">
               <CardHeader>
                 <CardTitle className="flex justify-center text-xl">
@@ -250,7 +259,7 @@ export const AuthPage = ({ isSignIn }: { isSignIn: boolean }) => {
                 )}
               </CardFooter>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
     );

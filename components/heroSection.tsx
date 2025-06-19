@@ -1,6 +1,9 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export const HeroSection = () => {
   return (
@@ -40,37 +43,85 @@ export const HeroSection = () => {
 
       <div className="relative z-10 text-center max-w-5xl mx-auto">
         <div className="flex items-center justify-center mb-2">
-          <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              type: "spring",
+              duration: 0.5,
+              ease: "easeIn",
+              stiffness: 100,
+              damping: 10,
+            }}
+            className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/20"
+          >
             <Sparkles className="w-4 h-4 text-purple-400" />
             <span className="text-gray-300 text-sm">
               Powered by Advanced AI
             </span>
-          </div>
+          </motion.div>
         </div>
 
-        <h1 className="text-5xl font-semibold text-white mb-3 leading-tight">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            type: "spring",
+            duration: 0.5,
+            delay: 0.2,
+            ease: "easeIn",
+            stiffness: 100,
+            damping: 10,
+          }}
+          className="text-5xl font-semibold text-white mb-3 leading-tight"
+        >
           Revolutionary AI
           <br />
           <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
             chat experience
           </span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-lg text-gray-300 mb-5 max-w-3xl mx-auto leading-relaxed md:px-12">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            type: "spring",
+            duration: 0.5,
+            delay: 0.3,
+            ease: "easeIn",
+            stiffness: 100,
+            damping: 10,
+          }}
+          className="text-lg text-gray-300 mb-5 max-w-3xl mx-auto leading-relaxed md:px-12"
+        >
           Experience the future of conversation. Build smarter workflows, get
           instant answers, and unlock your team&apos;s potential.
-        </p>
-        <Link href={"/signup"}>
-          <Button className="bg-blue-500/70 hover:bg-blue-500 cursor-pointer items-center font-semibold text-white">
-            <MessageCircle />
-            <span>Start for free</span>
-            <ArrowRight className="w-5 h-5" />
-          </Button>
-        </Link>
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            type: "spring",
+            duration: 0.5,
+            delay: 0.4,
+            ease: "easeIn",
+            stiffness: 100,
+            damping: 10,
+          }}
+        >
+          <Link href={"/signup"}>
+            <Button className="bg-blue-500/70 hover:bg-blue-500 cursor-pointer items-center font-semibold text-white">
+              <MessageCircle />
+              <span>Start for free</span>
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+          </Link>
 
-        <p className="text-gray-400 text-xs mt-5">
-          No credit card required • Start chatting instantly
-        </p>
+          <p className="text-gray-400 text-xs mt-5">
+            No credit card required • Start chatting instantly
+          </p>
+        </motion.div>
       </div>
     </section>
   );
