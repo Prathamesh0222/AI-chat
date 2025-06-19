@@ -11,8 +11,8 @@ A production-ready AI chatbot web application built with **Next.js**, **TypeScri
 ##  Live Demo
 [https://ai.pimpalkar.com](#)  
 **Demo Credentials**  
-Email: `demo@example.com`  
-Password: `password123`
+Email: `test@gmail.com`  
+Password: `Abc@123456`
 
 ## Features
 
