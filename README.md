@@ -1,4 +1,4 @@
-#  AI Chatbot – ZeroCode Frontend Assignment
+#  AI Chatbot 
 
 A production-ready AI chatbot web application built with **Next.js**, **TypeScript**, and **Tailwind CSS**, featuring secure authentication, real-time messaging, and OpenAI/Gemini API integration.
 
