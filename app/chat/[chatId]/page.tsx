@@ -9,8 +9,8 @@ import { ChatNavbar } from "@/components/chatNavbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Bot, UserCircle } from "lucide-react";
-import ReactMarkdown from "react-markdown";
 import { Loader } from "@/components/Loader";
+import { TypewriterText } from "@/components/TypewriterText";
 
 interface Message {
   id: string;
@@ -56,15 +56,24 @@ export default function ChatRoom() {
 
     try {
       setLoading(true);
+      const userMessage = {
+        id: Date.now().toString(),
+        content: input,
+        role: "User" as const,
+        createdAt: new Date().toISOString(),
+      };
+      setMessages((prev) => [...prev, userMessage]);
+      setInput("");
+
       const response = await axios.post(`/api/chats/${chatId}/message`, {
         content: input,
       });
+
       setMessages((prev) => [
-        ...prev,
-        response.data.userMessage,
+        ...prev.slice(0, -1),
+        userMessage,
         response.data.botMessage,
       ]);
-      setInput("");
     } catch (error) {
       console.error("Error sending message:", error);
     } finally {
@@ -124,36 +133,11 @@ export default function ChatRoom() {
                           : "bg-gray-900 text-white rounded-bl-none"
                       }`}
                     >
-                      <div>
-                        <ReactMarkdown
-                          components={{
-                            //@ts-expect-error - ReactMarkdown types are incomplete
-                            code({ inline, children, ...props }) {
-                              return (
-                                <code
-                                  className={`${
-                                    inline
-                                      ? "bg-gray-800 rounded px-1 py-0.5"
-                                      : "block bg-gray-800 rounded-md p-4 overflow-x-auto text-sm"
-                                  }`}
-                                  {...props}
-                                >
-                                  {children}
-                                </code>
-                              );
-                            },
-                            pre({ children }) {
-                              return (
-                                <pre className="overflow-x-auto w-full my-2">
-                                  {children}
-                                </pre>
-                              );
-                            },
-                          }}
-                        >
-                          {message.content}
-                        </ReactMarkdown>
-                      </div>
+                      {message.role === "User" ? (
+                        <div>{message.content}</div>
+                      ) : (
+                        <TypewriterText content={message.content} />
+                      )}
                     </div>
                     <span className="text-xs text-gray-500 mt-1">
                       {new Date(message.createdAt).toLocaleTimeString([], {
